@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advit Goel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -13,30 +16,70 @@
             <img src="avatar.png" alt="Profile Picture" id="avatarimg">
             <h3 id="name">Advit Goel</h3>
         </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="navlinks">
             <a href="index.html" class="headericons">Home</a>
             <a href="about.html" class="headericons">About Me</a>
-            <a href="resume.html" class="headericons"><b><u>Resume</u></b></a>
+            <a href="resume.html" class="headericons active">Resume</a>
             <a href="projects.html" class="headericons">Projects</a>
             <a href="contact.html" class="headericons">Contact</a>
         </div>
     </header>
 
     <main id="maincontent">
+        <h1 class="page-heading">Resume</h1>
+
+        <!--
+          TODO: this is a starter layout, not your real resume yet.
+          Duplicate a .resume-card for each extra entry and fill in your own
+          experience, education and skills.
+        -->
+
+        <div class="content-section">
+            <h2 class="section-heading">Education</h2>
+            <div class="resume-card">
+                <div class="resume-card-title">[Add degree]</div>
+                <div class="resume-card-sub">[Add institution] · [Add dates]</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-heading">Experience</h2>
+            <div class="resume-card">
+                <div class="resume-card-title">[Add role] — [Add company name]</div>
+                <div class="resume-card-sub">[Add dates]</div>
+                <div class="resume-card-body">[Add a line or two about what you did and what you built.]</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-heading">Skills</h2>
+            <div style="margin-top:4px;">
+                <span class="skillsbox">[Add skill]</span>
+                <span class="skillsbox">[Add skill]</span>
+                <span class="skillsbox">[Add skill]</span>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-heading">Certifications</h2>
+            <div style="margin-top:4px;">
+                <span class="skillsbox">🏆 [Add certification]</span>
+                <span class="skillsbox">🏆 [Add certification]</span>
+            </div>
+        </div>
+
       
-
-        <svg viewBox="0 0 800 800" width="620" height="620" style="position:absolute; right:0; top:10px;">
-            <circle cx="400" cy="400" r="280" fill="#3F5A2C" opacity="0.15"/>
-            <circle cx="430" cy="350" r="220" fill="#C9A24B" opacity="0.3"/>
-        </svg>
-
-
     </main>
 
     <footer class="footer">
         <span class="copyright">© 2026 Advit Goel. All rights reserved.</span>
         <div class="socials">
-            <a href="https://github.com/coolgoel123">
+            <a href="https://github.com/coolgoel1">
                 <img src="./github.png" alt="GitHub" width="35" height="35" style="border-radius:50%;">
             </a>
             <a href="https://linkedin.com/in/advit-goel">
@@ -45,5 +88,6 @@
         </div>
     </footer>
 
+    <script src="./script.js"></script>
 </body>
 </html>

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advit Goel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -13,9 +16,14 @@
             <img src="avatar.png" alt="Profile Picture" id="avatarimg">
             <h3 id="name">Advit Goel</h3>
         </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="navlinks">
             <a href="index.html" class="headericons">Home</a>
-            <a href="about.html" class="headericons"><b><u>About Me</u></b></a>
+            <a href="about.html" class="headericons active">About Me</a>
             <a href="resume.html" class="headericons">Resume</a>
             <a href="projects.html" class="headericons">Projects</a>
             <a href="contact.html" class="headericons">Contact</a>
@@ -28,25 +36,116 @@
             <div id="factsbox">
                 <div style="font-weight:700; margin-bottom:12px; font-size:18px;">Quick Facts</div>
                 <div class="facts">📍 India</div>
-                <div class="facts">🎓 B.Tech CS &amp; AI</div>
-                <div class="facts">💻 Coding Blocks School of Technology</div>
+                <div class="facts">🎓 B.Tech CS &amp; AI, GLA University</div>
+                <div class="facts">💻 Python · Java · Full-Stack Dev</div>
+                <div class="facts">🏆 3 certifications earned</div>
             </div>
         </div>
 
         <div class="contentdiv">
             <h1 class="headingabout">About Me</h1>
-            <p class="description">Description</p>
+            <p class="description">I'm a first-year B.Tech Computer Science &amp; AI student at GLA University, currently building my foundation in Python, Java, data structures &amp; algorithms, full-stack web development, and Figma. Outside the classroom I tend to say yes to things — organizing tech fests, leading community initiatives, and exploring generative AI on the side. I'm always up for learning something new, collaborating with other builders, and shipping things I'm proud of.</p>
 
-            <div style="margin-bottom:40px;">
-                <span class="skillsbox">Python</span>
-                <span class="skillsbox">Web Dev</span>
-                <span class="skillsbox">DSA- Java</span>
+            <div class="content-section">
+                <h2 class="section-heading">Skills</h2>
+                <div class="skills-list">
+                    <div class="skill-bar">
+                        <div class="skill-bar-head">
+                            <span class="skill-name">Web Development (Frontend + JS)</span>
+                            <span class="skill-percent">55%</span>
+                        </div>
+                        <div class="skill-track" role="progressbar" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" aria-label="Web Development proficiency">
+                            <div class="skill-fill" style="--fill: 55%;"></div> <!-- EDIT THIS NUMBER TO CHANGE PROGRESS BAR -->
+                        </div>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-bar-head">
+                            <span class="skill-name">Python</span>
+                            <span class="skill-percent">50%</span>
+                        </div>
+                        <div class="skill-track" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Python proficiency">
+                            <div class="skill-fill" style="--fill: 50%;"></div> <!-- EDIT THIS NUMBER TO CHANGE PROGRESS BAR -->
+                        </div>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-bar-head">
+                            <span class="skill-name">Figma / UI-UX</span>
+                            <span class="skill-percent">35%</span>
+                        </div>
+                        <div class="skill-track" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" aria-label="Figma proficiency">
+                            <div class="skill-fill" style="--fill: 35%;"></div> <!-- EDIT THIS NUMBER TO CHANGE PROGRESS BAR -->
+                        </div>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-bar-head">
+                            <span class="skill-name">Java</span>
+                            <span class="skill-percent">30%</span>
+                        </div>
+                        <div class="skill-track" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" aria-label="Java proficiency">
+                            <div class="skill-fill" style="--fill: 30%;"></div> <!-- EDIT THIS NUMBER TO CHANGE PROGRESS BAR -->
+                        </div>
+                    </div>
+
+                    <div class="skill-bar">
+                        <div class="skill-bar-head">
+                            <span class="skill-name">Prompt Engineering</span>
+                            <span class="skill-percent">25%</span>
+                        </div>
+                        <div class="skill-track" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Prompt Engineering proficiency">
+                            <div class="skill-fill" style="--fill: 25%;"></div> <!-- EDIT THIS NUMBER TO CHANGE PROGRESS BAR -->
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div style="border-left:4px solid #1E2A4A; padding-left:28px;">
-                <div style="margin-bottom:24px;">
-                    <div style="font-weight:700; color:#1E2A4A; font-size:18px;">2026-2030</div>
-                    <div style="font-size:17px; color:#1E2A4A; margin-top:4px;">B.Tech CS &amp; AI, Coding Blocks School of Technology</div>
+            <div class="content-section">
+                <h2 class="section-heading">Certifications</h2>
+                <div>
+                    <span class="skillsbox">🏆 Young Tycoons Business Challenge '22</span>
+                    <span class="skillsbox">🏆 Adobe Work Experience Program</span>
+                    <span class="skillsbox">🏆 Kaggle 5-Day Gen AI Badge</span>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-heading">Education</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2018 – 2026</div>
+                        <div class="timeline-text">DAV Schools Network</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2026 – 2030</div>
+                        <div class="timeline-text">B.Tech, Computer Science &amp; AI — GLA University</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2 class="section-heading">Leadership &amp; Activities</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">Jul 2022 – Oct 2022</div>
+                        <div class="timeline-text">Organizer, Tinkerfest '22 — DLDAV Model School Pitampura</div>
+                        <div class="timeline-desc">Contributed to content creation and IT, and helped run event logistics for a fest sponsored by Adobe, 1M1B and Technowskola.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">May 2024 – Aug 2024</div>
+                        <div class="timeline-text">Community Lead, ThinkStartup</div>
+                        <div class="timeline-desc">Coordinated with schools for the Youth Ideathon and helped run the grand finale at IIT Delhi.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Apr 2025 – Feb 2026</div>
+                        <div class="timeline-text">Student Council Member — DLDAV Model School Pitampura</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">Jul 2025 – Feb 2026</div>
+                        <div class="timeline-text">Head of Distribution, Global Watch Club — DLDAV Model School Pitampura</div>
+                        <div class="timeline-desc">Manage activities and communication for the club, partnering with Sambhaav Care and Share, Generation Global, and Teach a Man to Fish.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,7 +154,7 @@
     <footer class="footer">
         <span class="copyright">© 2026 Advit Goel. All rights reserved.</span>
         <div class="socials">
-            <a href="https://github.com/coolgoel123">
+            <a href="https://github.com/coolgoel1">
                 <img src="./github.png" alt="GitHub" width="35" height="35" style="border-radius:50%;">
             </a>
             <a href="https://linkedin.com/in/advit-goel">
@@ -64,5 +163,6 @@
         </div>
     </footer>
 
+    <script src="./script.js"></script>
 </body>
 </html>

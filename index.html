@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advit Goel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-    
-    
 </head>
 <body>
 
@@ -15,8 +16,13 @@
             <img src="avatar.png" alt="Profile Picture" id="avatarimg">
             <h3 id="name">Advit Goel</h3>
         </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="navlinks">
-            <a href="index.html" class="headericons"><b><u>Home</u></b></a>
+            <a href="index.html" class="headericons active">Home</a>
             <a href="about.html" class="headericons">About Me</a>
             <a href="resume.html" class="headericons">Resume</a>
             <a href="projects.html" class="headericons">Projects</a>
@@ -25,12 +31,12 @@
     </header>
 
     <main id="maincontent">
-        <h1 id="headname">Advit <br> Goel</h1>
-        <p id="description">B. Tech. Computer Science and Artificial <br> Intelligence at Coding Blocks School of <br> Technology</p>
+        <h1 id="headname" class="fade-up">Advit <br> Goel</h1>
+        <p id="description" class="fade-up delay-1">B. Tech. Computer Science and Artificial <br> Intelligence at GLA University</p>
 
         <svg viewBox="0 0 800 800" width="620" height="620" style="position:absolute; right:0; top:10px;">
-            <circle cx="400" cy="400" r="280" fill="#3F5A2C" opacity="0.15"/>
-            <circle cx="430" cy="350" r="220" fill="#C9A24B" opacity="0.3"/>
+            <circle class="floaty" cx="400" cy="400" r="280" fill="#3F5A2C" opacity="0.15"/>
+            <circle class="floaty" cx="430" cy="350" r="220" fill="#C9A24B" opacity="0.3"/>
         </svg>
 
         <a href="projects.html"><button id="checkout">Check out my work &#9658;</button></a>
@@ -39,7 +45,7 @@
     <footer class="footer">
         <span class="copyright">© 2026 Advit Goel. All rights reserved.</span>
         <div class="socials">
-            <a href="https://github.com/coolgoel123">
+            <a href="https://github.com/coolgoel1">
                 <img src="./github.png" alt="GitHub" width="35" height="35" style="border-radius:50%;">
             </a>
             <a href="https://linkedin.com/in/advit-goel">
@@ -48,5 +54,6 @@
         </div>
     </footer>
 
+    <script src="./script.js"></script>
 </body>
 </html>
