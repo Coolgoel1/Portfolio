@@ -33,6 +33,27 @@
     <main id="maincontent">
         <h1 class="page-heading">Projects</h1>
 
+
+        <div id="admin-toolbar" class="admin-toolbar" style="display:none;">
+            <div class="admin-toolbar-row">
+                <button class="admin-btn" id="add-project-btn" type="button">+ Add project</button>
+                <button class="admin-btn" id="add-folder-btn" type="button">+ Add folder</button>
+                <button class="admin-btn secondary" id="github-fetch-btn" type="button">Fetch GitHub repos</button>
+                <button class="admin-btn secondary" id="export-btn" type="button">Export</button>
+                <button class="admin-btn secondary" id="reset-draft-btn" type="button">Reset draft</button>
+                <button class="admin-btn secondary" id="logout-btn" type="button">Log out</button>
+            </div>
+            <div class="admin-row" style="margin-top:10px; max-width:420px;">
+                <input type="text" id="github-username" value="coolgoel1" placeholder="GitHub username">
+                <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:#1E2A4A; white-space:nowrap;">
+                    <input type="checkbox" id="github-include-forks" style="width:auto;"> Include forks
+                </label>
+            </div>
+            <div class="admin-status" id="github-status"></div>
+            <div id="github-list"></div>
+        </div>
+
+
         <div class="filter-bar">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="uiux">UI/UX (Figma)</button>
@@ -42,47 +63,14 @@
             <button class="filter-btn" data-filter="prompt">Prompt Engineering</button>
         </div>
 
-        
-        <div class="projects-grid">
-            <div class="project-card" data-category="uiux">
-                <h2 class="project-card-title">[UI/UX Project Title]</h2>
-                <p class="project-card-body">[Add a short description of what you designed in Figma and the problem it solves.]</p>
-                <span class="project-tag">Figma</span>
-                <span class="project-tag">UI/UX</span>
-            </div>
-
-            <div class="project-card" data-category="webdev">
-                <h2 class="project-card-title">[Web Dev Project Title]</h2>
-                <p class="project-card-body">[Add a short description of the site or app you built and the stack you used.]</p>
-                <span class="project-tag">Web Dev</span>
-                <span class="project-tag">HTML/CSS/JS</span>
-            </div>
-
-            <div class="project-card" data-category="python">
-                <h2 class="project-card-title">[Python Project Title]</h2>
-                <p class="project-card-body">[Add a short description of what this project does and the problem it solves.]</p>
-                <span class="project-tag">Python</span>
-            </div>
-
-            <div class="project-card" data-category="java">
-                <h2 class="project-card-title">[Java Project Title]</h2>
-                <p class="project-card-body">[Add a short description of what this project does and the problem it solves.]</p>
-                <span class="project-tag">Java</span>
-            </div>
-
-            <div class="project-card" data-category="prompt">
-                <h2 class="project-card-title">[Prompt Engineering Project Title]</h2>
-                <p class="project-card-body">[Add a short description of the prompt or AI workflow you built and what it does.]</p>
-                <span class="project-tag">Prompt Engineering</span>
-                <span class="project-tag">Gen AI</span>
-            </div>
-        </div>
+        <div class="projects-grid" id="projects-grid"></div>
 
 
     </main>
 
     <footer class="footer">
         <span class="copyright">© 2026 Advit Goel. All rights reserved.</span>
+        <a href="projects.html#admin" id="admin-trigger" class="hidden-admin-link" aria-label="Project admin login" tabindex="0">&#9679;</a>
         <div class="socials">
             <a href="https://github.com/coolgoel1">
                 <img src="./github.png" alt="GitHub" width="35" height="35" style="border-radius:50%;">
@@ -93,6 +81,105 @@
         </div>
     </footer>
 
+    <dialog id="login-dialog" class="site-dialog">
+        <h2 class="dialog-title">Project Admin Login</h2>
+        <div class="admin-field">
+            <label for="login-id">ID</label>
+            <input type="text" id="login-id" autocomplete="username">
+        </div>
+        <div class="admin-field">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" autocomplete="current-password">
+        </div>
+        <div class="admin-error" id="login-error"></div>
+        <div class="admin-row">
+            <button class="admin-btn" id="login-submit-btn" type="button">Log in</button>
+            <button class="admin-btn secondary" id="login-cancel-btn" type="button">Cancel</button>
+        </div>
+    </dialog>
+
+    <!-- Add / edit a project (also used for adding or editing an item inside a folder) -->
+    <dialog id="project-dialog" class="site-dialog">
+        <h2 class="dialog-title" id="project-dialog-heading">Add a project</h2>
+        <div class="admin-field">
+            <label for="field-title">Title</label>
+            <input type="text" id="field-title">
+        </div>
+        <div class="admin-row">
+            <div class="admin-field" id="category-field-wrap">
+                <label for="field-category">Category</label>
+                <select id="field-category">
+                    <option value="uiux">UI/UX (Figma)</option>
+                    <option value="webdev">Web Dev</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                    <option value="prompt">Prompt Engineering</option>
+                </select>
+            </div>
+            <div class="admin-field" id="folder-field-wrap">
+                <label for="field-folder">Folder</label>
+                <select id="field-folder"></select>
+            </div>
+        </div>
+        <div class="admin-field">
+            <label for="field-link">Link (optional)</label>
+            <input type="text" id="field-link" placeholder="https://...">
+        </div>
+        <div class="admin-field">
+            <label for="field-description">Description</label>
+            <textarea id="field-description"></textarea>
+        </div>
+        <div class="admin-field">
+            <label for="field-tags">Tags (comma separated)</label>
+            <input type="text" id="field-tags" placeholder="Figma, UI/UX">
+        </div>
+        <div class="admin-field">
+            <label for="field-media-type">Media</label>
+            <select id="field-media-type">
+                <option value="none">None</option>
+                <option value="image">Image</option>
+                <option value="embed">Embed (iframe — e.g. a Figma "Share &gt; Embed" link)</option>
+            </select>
+        </div>
+        <div class="admin-field" id="field-media-upload-wrap" style="display:none;">
+            <label for="field-media-upload">Upload image</label>
+            <input type="file" id="field-media-upload" accept="image/*">
+        </div>
+        <div class="admin-field" id="field-media-url-wrap" style="display:none;">
+            <label for="field-media-url">Or paste an image/embed URL instead</label>
+            <input type="text" id="field-media-url" placeholder="https://...">
+        </div>
+        <div class="admin-error" id="project-form-error"></div>
+        <div class="admin-row">
+            <button class="admin-btn" id="save-project-btn" type="button">Add project</button>
+            <button class="admin-btn secondary" id="cancel-project-btn" type="button">Cancel</button>
+        </div>
+    </dialog>
+
+    <dialog id="folder-dialog" class="site-dialog">
+        <h2 class="dialog-title" id="folder-dialog-title">Folder</h2>
+        <p class="admin-subtext" id="folder-dialog-desc"></p>
+        <div class="admin-list" id="folder-items-list"></div>
+        <div class="admin-row" id="folder-admin-row" style="display:none; margin-top:14px;">
+            <button class="admin-btn secondary small" id="add-item-to-folder-btn" type="button">+ Add project here</button>
+            <button class="admin-btn danger small" id="delete-folder-btn" type="button">Delete folder</button>
+        </div>
+        <button class="admin-btn secondary" id="close-folder-btn" type="button" style="margin-top:16px;">Close</button>
+    </dialog>
+    <dialog id="export-dialog" class="site-dialog">
+        <h2 class="dialog-title">Export</h2>
+        <p class="admin-subtext">Download or copy this, replace projects-data.js in your project folder, then redeploy.</p>
+        <textarea class="admin-export-box" id="export-box" readonly></textarea>
+        <div class="admin-status" id="export-status"></div>
+        <div class="admin-row" style="margin-top:12px;">
+            <button class="admin-btn" id="download-btn" type="button">Download</button>
+            <button class="admin-btn secondary" id="copy-btn" type="button">Copy</button>
+            <button class="admin-btn secondary" id="close-export-btn" type="button">Close</button>
+        </div>
+    </dialog>
+
+    <script src="./projects-data.js"></script>
     <script src="./script.js"></script>
+    <script src="./projects-admin.js"></script>
 </body>
 </html>
