@@ -31,7 +31,6 @@
     font-family: 'Sora', 'Inter', Arial, Helvetica, sans-serif;
   }
 
-  /* Visible, on-brand focus state for keyboard users */
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
@@ -96,8 +95,6 @@
     transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease;
   }
 
-  /* Each nav link gets a small animated underline that answers hover/focus,
-     and the current page is marked with the gold accent instead of <b><u>. */
   .headericons {
     position: relative;
     color: #E8F5BD;
@@ -134,8 +131,6 @@
   .headericons.active {
     color: #C9A24B;
   }
-
-  /* Hamburger button: hidden on desktop, shown under 768px */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -159,7 +154,6 @@
     transition: transform 0.35s ease, opacity 0.25s ease;
   }
 
-  /* Hamburger morphs into an X when the menu is open */
   .hamburger.active span:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
   }
@@ -186,8 +180,6 @@
   #maincontent svg {
     display: none;
   }
-
-  /* Decorative background shapes drift slowly to give the page some life */
   .floaty {
     transform-box: fill-box;
     transform-origin: center;
@@ -241,8 +233,6 @@
     margin-top: 25px;
   }
 
-  /* One orchestrated entrance for the homepage hero, staggered a little
-     so the heading, description and button land one after another. */
   .fade-up {
     animation: fadeUp 0.7s ease both;
   }
@@ -375,8 +365,6 @@
     overflow: hidden;
   }
 
-  /* The fill reads its target width from the --fill custom property set
-     inline on each bar, then animates from 0 up to that value once on load. */
   .skill-fill {
     height: 100%;
     border-radius: 20px;
@@ -419,7 +407,6 @@
     line-height: 1.5;
   }
 
-  /* Reusable section wrapper + heading, used on the About and Resume pages */
   .content-section {
     margin-bottom: 36px;
   }
@@ -519,15 +506,14 @@
     box-shadow: 9px 9px 0 #1E2A4A;
   }
 
-  /* A folder card is a normal card, just clickable to open its contents */
   .folder-card {
     cursor: pointer;
     background: #FBF8EE;
-    box-shadow: 4px 4px 0 #1E2A4A, 8px 8px 0 #C9A24B;
+    box-shadow: 4px 4px 0 #1E2A4A;
   }
 
   .folder-card:hover {
-    box-shadow: 7px 7px 0 #1E2A4A, 11px 11px 0 #C9A24B;
+    box-shadow: 7px 7px 0 #1E2A4A;
   }
 
   .folder-badge {
@@ -538,7 +524,6 @@
     margin-bottom: 8px;
   }
 
-  /* Small edit/delete/reorder strip, only added to cards in admin mode */
   .card-admin-controls {
     position: absolute;
     top: -12px;
@@ -741,16 +726,13 @@
     transform: translateY(-3px);
   }
 
-  /* Deliberately near-invisible: a quiet way back into admin.html.
-     Not real security (see admin.html) — just out of the way of visitors. */
   .hidden-admin-link {
     color: #E8F5BD;
     text-decoration: none;
     font-size: 12px;
-    opacity: 0.4;
+    opacity: 0.1;
     padding: 8px;
     margin-left: 2px;
-    transition: opacity 0.2s ease, transform 0.2s ease;
     display: inline-block;
   }
 
@@ -762,7 +744,6 @@
 
   /* RESPONSIVENESS */
 
-  /* Mobile: collapse the nav into a hamburger-triggered dropdown */
   @media (max-width: 767px) {
     .hamburger {
       display: flex;
@@ -896,10 +877,6 @@
     }
   }
 
-  /* IN-PAGE ADMIN PANEL (projects.html) */
-
-  /* Native <dialog> gives us a free, accessible modal + backdrop —
-     styled to match the rest of the site. */
   .site-dialog {
     background: #F6F3E7;
     color: #1E2A4A;
@@ -1121,7 +1098,6 @@
     min-height: 18px;
   }
 
-  /* Respect people who've asked their OS for less motion */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

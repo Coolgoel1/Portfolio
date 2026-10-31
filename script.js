@@ -1,29 +1,13 @@
-// ---------------------------------------------------------
-// script.js
-// Two small, independent behaviours for the site:
-//   1. The mobile hamburger menu (open/close + close on link tap)
-//   2. A tiny header shadow change once you scroll the page
-// Nothing here needs more than querySelector, classList and
-// addEventListener, so feel free to read through and tweak it.
-// ---------------------------------------------------------
-
-// Grab the hamburger button and the nav links list.
-// Every page has the same header, so this file works unchanged
-// on index.html, about.html, resume.html, projects.html and contact.html.
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.querySelector('.navlinks');
 
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', function () {
-    // classList.toggle returns true if the class ended up being added,
-    // so we can reuse that to keep the button and the menu in sync.
     const isOpen = navLinks.classList.toggle('open');
     hamburger.classList.toggle('active', isOpen);
     hamburger.setAttribute('aria-expanded', isOpen);
   });
 
-  // Once someone taps a link in the open mobile menu, close it again
-  // instead of leaving it open behind the new page.
   const links = navLinks.querySelectorAll('a');
   links.forEach(function (link) {
     link.addEventListener('click', function () {
@@ -33,9 +17,6 @@ if (hamburger && navLinks) {
     });
   });
 }
-
-// Give the header a very slightly deeper shadow once the page has
-// scrolled a bit, just enough to show it's sitting above the content.
 const header = document.querySelector('header');
 
 if (header) {
@@ -44,20 +25,6 @@ if (header) {
   });
 }
 
-// ---------------------------------------------------------
-// Projects page: build cards from a PROJECTS-shaped array, then let
-// the filter buttons show/hide by category.
-//
-// renderProjectsGrid() is shared with projects-admin.js: the public
-// page calls it once with the published PROJECTS array, and the admin
-// panel calls it again (with adminMode: true) every time something is
-// added, edited, reordered or deleted, so the grid you're looking at
-// is always exactly what's about to be exported — no separate preview.
-// ---------------------------------------------------------
-
-// Turns one project object into <div class="project-card"> markup.
-// Handles the three media types a project can have: none, an image,
-// or an embed (e.g. a Figma "Share > Embed" link).
 function buildProjectCardInner(project) {
   let mediaHtml = '';
   if (project.media && project.media.type === 'image' && project.media.src) {
@@ -83,9 +50,6 @@ function buildProjectCardInner(project) {
   );
 }
 
-// A folder card looks like a normal card but shows how many projects
-// are inside instead of a description, and opens the folder dialog
-// (handled in projects-admin.js) when clicked.
 function buildFolderCardInner(folder) {
   const count = (folder.items || []).length;
   return (
@@ -96,10 +60,6 @@ function buildFolderCardInner(folder) {
   );
 }
 
-// Builds the full grid of cards. source = the PROJECTS-shaped array
-// to render (either the published PROJECTS, or the admin's draft).
-// adminMode = true adds the small edit/delete/reorder controls onto
-// each card (projects-admin.js wires those buttons up afterwards).
 function renderProjectsGrid(source, adminMode) {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
@@ -134,9 +94,6 @@ function renderProjectsGrid(source, adminMode) {
 }
 window.renderProjectsGrid = renderProjectsGrid;
 
-// Re-runs whichever filter button is currently marked .active, so
-// re-rendering the grid (e.g. after an edit) doesn't reset the filter
-// the visitor had picked.
 function reapplyActiveFilter() {
   const activeButton = document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn[data-filter="all"]');
   if (!activeButton) return;
@@ -162,9 +119,6 @@ document.querySelectorAll('.filter-btn').forEach(function (button) {
   });
 });
 
-// Clicking a folder card (but not one of its admin buttons) opens the
-// folder dialog if projects-admin.js has defined one; harmless no-op
-// on pages/sessions where it hasn't.
 document.addEventListener('click', function (event) {
   const adminButton = event.target.closest('[data-admin-action]');
   if (adminButton) return; // let projects-admin.js handle these

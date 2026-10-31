@@ -4,11 +4,8 @@ const ADMIN_LOGINS = [
 
 const SESSION_KEY = 'admin-logged-in';
 const DRAFT_KEY = 'projects-draft';
-const LAST_EXPORT_KEY = 'projects-last-export'; // a snapshot of the draft as of the last Export, so we can warn about unexported changes
+const LAST_EXPORT_KEY = 'projects-last-export'; 
 
-// ---------------------------------------------------------
-// Draft state
-// ---------------------------------------------------------
 function loadDraft() {
   const saved = localStorage.getItem(DRAFT_KEY);
   if (saved) {
@@ -18,8 +15,6 @@ function loadDraft() {
       console.error('Saved draft was unreadable, starting from projects-data.js instead.', err);
     }
   }
-  // JSON round-trip = a deep copy, so editing the draft can never
-  // accidentally change the original PROJECTS array.
   return typeof PROJECTS !== 'undefined' ? JSON.parse(JSON.stringify(PROJECTS)) : [];
 }
 
@@ -33,14 +28,10 @@ function saveDraft() {
   localStorage.setItem(DRAFT_KEY, JSON.stringify(draftProjects));
 }
 
-// Re-renders the public grid from the draft (admin mode) and keeps
-// the open folder dialog, if any, in sync too.
 function refreshGrid() {
   window.renderProjectsGrid(draftProjects, isAdminMode);
 }
 
-// Swaps two entries' "order" so one moves earlier/later. Works on
-// either the top-level draft array or a folder's .items array.
 function moveEntryInArray(array, id, direction) {
   const sorted = array.slice().sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
   const index = sorted.findIndex(function (entry) { return entry.id === id; });
@@ -57,9 +48,6 @@ function getFolder(folderId) {
   return draftProjects.find(function (p) { return p.id === folderId && p.kind === 'folder'; });
 }
 
-// ---------------------------------------------------------
-// Login popup
-// ---------------------------------------------------------
 const loginDialog = document.getElementById('login-dialog');
 const loginIdInput = document.getElementById('login-id');
 const loginPasswordInput = document.getElementById('login-password');
@@ -100,8 +88,6 @@ document.getElementById('login-cancel-btn').addEventListener('click', function (
 });
 
 if (adminTrigger) {
-  // We're already on projects.html, so open the popup instead of
-  // letting the link reload the page.
   adminTrigger.addEventListener('click', function (event) {
     event.preventDefault();
     loginIdInput.value = '';
@@ -111,8 +97,6 @@ if (adminTrigger) {
   });
 }
 
-// Arrived here from another page's hidden link (projects.html#admin) —
-// open the popup automatically once the page is ready.
 if (window.location.hash === '#admin' && sessionStorage.getItem(SESSION_KEY) !== 'true') {
   loginDialog.showModal();
 }
@@ -121,9 +105,6 @@ if (sessionStorage.getItem(SESSION_KEY) === 'true') {
   enterAdminMode();
 }
 
-// True when the current draft doesn't match the last thing you
-// actually exported (or you've never exported at all) — this is the
-// exact situation that makes the logged-out page look "out of date".
 function hasUnexportedChanges() {
   const lastExport = localStorage.getItem(LAST_EXPORT_KEY);
   return lastExport !== JSON.stringify(draftProjects);
@@ -147,10 +128,6 @@ document.getElementById('logout-btn').addEventListener('click', function () {
   refreshGrid();
 });
 
-// ---------------------------------------------------------
-// Card controls (the little up/down/edit/delete strip on each card)
-// Delegated so it keeps working after every re-render.
-// ---------------------------------------------------------
 document.getElementById('projects-grid').addEventListener('click', function (event) {
   const button = event.target.closest('[data-admin-action]');
   if (!button || !isAdminMode) return;
@@ -213,9 +190,6 @@ document.getElementById('reset-draft-btn').addEventListener('click', function ()
   refreshGrid();
 });
 
-// ---------------------------------------------------------
-// Add / edit project dialog — also used for items inside a folder
-// ---------------------------------------------------------
 const projectDialog = document.getElementById('project-dialog');
 const projectDialogHeading = document.getElementById('project-dialog-heading');
 const titleInput = document.getElementById('field-title');
@@ -243,11 +217,6 @@ mediaTypeInput.addEventListener('change', function () {
 mediaUploadInput.addEventListener('change', function () {
   const file = mediaUploadInput.files[0];
   if (!file) return;
-
-  // Turns the picked file into a base64 data URL, so the image lives
-  // directly inside projects-data.js with nothing separate to host.
-  // Fine for a few small images; for bigger ones, paste an external
-  // URL instead.
   const reader = new FileReader();
   reader.onload = function () {
     uploadedImageDataUrl = reader.result;
@@ -270,10 +239,6 @@ function populateFolderOptions(selectedFolderId) {
   folderSelectInput.value = selectedFolderId || '';
 }
 
-// context: { mode: 'add'|'edit', lockedFolderId: null|folderId, editingId?: id }
-// lockedFolderId is set when adding/editing an item from inside an
-// open folder dialog — in that case the folder/category pickers hide,
-// since folder membership is already decided.
 function openProjectDialog(context) {
   formContext = context;
   formError.textContent = '';
@@ -327,9 +292,6 @@ document.getElementById('cancel-project-btn').addEventListener('click', function
   projectDialog.close();
 });
 
-// Resolves the folder dropdown's value to an actual folder id,
-// creating a new folder first if "+ Create new folder…" was chosen.
-// Returns null if there's nowhere to put it (e.g. the prompt was cancelled).
 function resolveFolderSelection(value) {
   if (value !== '__new__') return value || null;
 
@@ -384,8 +346,6 @@ saveProjectBtn.addEventListener('click', function () {
     const existing = array.find(function (p) { return p.id === formContext.editingId; });
     Object.assign(existing, projectData);
 
-    // Editing a top-level project and picked a folder in the dropdown?
-    // Move it out of the top level and into that folder.
     if (!isItemContext && folderSelectInput.value) {
       const destinationFolderId = resolveFolderSelection(folderSelectInput.value);
       if (destinationFolderId) {
@@ -416,11 +376,6 @@ saveProjectBtn.addEventListener('click', function () {
   if (currentOpenFolderId) renderFolderDialogContents(currentOpenFolderId);
 });
 
-// ---------------------------------------------------------
-// Folder dialog — open to everyone (clicking a folder card calls
-// this via window.openFolderDialog, wired up in script.js); the
-// admin-only controls just stay hidden when isAdminMode is false.
-// ---------------------------------------------------------
 const folderDialog = document.getElementById('folder-dialog');
 const folderDialogTitle = document.getElementById('folder-dialog-title');
 const folderDialogDesc = document.getElementById('folder-dialog-desc');
@@ -535,9 +490,6 @@ document.getElementById('close-folder-btn').addEventListener('click', function (
   folderDialog.close();
 });
 
-// ---------------------------------------------------------
-// GitHub: pull in public repos as a starting point for a project
-// ---------------------------------------------------------
 const githubUsernameInput = document.getElementById('github-username');
 const githubIncludeForks = document.getElementById('github-include-forks');
 const githubStatus = document.getElementById('github-status');
@@ -562,7 +514,6 @@ document.getElementById('github-fetch-btn').addEventListener('click', async func
   githubListEl.innerHTML = '';
 
   try {
-    // Public repos need no login or token — a plain, read-only request.
     const response = await fetch(
       'https://api.github.com/users/' + encodeURIComponent(username) + '/repos?per_page=100&sort=pushed'
     );
@@ -636,9 +587,6 @@ document.getElementById('github-fetch-btn').addEventListener('click', async func
   }
 });
 
-// ---------------------------------------------------------
-// Export
-// ---------------------------------------------------------
 const exportDialog = document.getElementById('export-dialog');
 const exportBox = document.getElementById('export-box');
 const exportStatus = document.getElementById('export-status');
