@@ -1,0 +1,65 @@
+[
+  {
+    "id": "folder-1",
+    "kind": "folder",
+    "title": "Figma Website Clones",
+    "category": "uiux",
+    "description": "Websites Designed/Cloned using Figma",
+    "items": [
+      {
+        "id": "portfolio",
+        "title": "1. Portfolio Website Design",
+        "description": "created my portfolio website's design using figma",
+        "media": { "type": "none" },
+        "link": "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/hag0gsz4zpj4G4peZHPzKw/Portfolio-Website-Design?node-id=1-2&t=fXhRIeNX3elLOrHk-1"
+      },
+      {
+        "id": "app-Clone",
+        "title": "2. Cloning an app's home screen",
+        "description": "Cloned an app's home screen using a reference image",
+        "media": { "type": "none" },
+        "link": "https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/design/vP1CPJE9jZ1UaJjtm6ZlbQ/Untitled?node-id=0-1&m=dev"
+      }
+    ]
+  },
+  {
+    "id": "portfolio",
+    "kind": "project",
+    "title": "Portfolio Website",
+    "category": "webdev",
+    "description": "Public Repository to my portfolio website built using HTML, CSS and JS. ",
+    "tags": ["Web Dev", "HTML/CSS/JS"],
+    "media": { "type": "none" },
+    "link": "https://github.com/Coolgoel1/Portfolio"
+  },
+  {
+    "id": "proj-3",
+    "kind": "project",
+    "title": "[Python Project Title]",
+    "category": "python",
+    "description": "Add a short description of what this project does and the problem it solves.",
+    "tags": ["Python"],
+    "media": { "type": "none" },
+    "link": ""
+  },
+  {
+    "id": "proj-4",
+    "kind": "project",
+    "title": "[Java Project Title]",
+    "category": "java",
+    "description": "Add a short description of what this project does and the problem it solves.",
+    "tags": ["Java"],
+    "media": { "type": "none" },
+    "link": ""
+  },
+  {
+    "id": "proj-5",
+    "kind": "project",
+    "title": "[Prompt Engineering Project Title]",
+    "category": "prompt",
+    "description": "Add a short description of the prompt or AI workflow you built and what it does.",
+    "tags": ["Prompt Engineering", "Gen AI"],
+    "media": { "type": "none" },
+    "link": ""
+  }
+]

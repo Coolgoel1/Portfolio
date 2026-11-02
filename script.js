@@ -1,8 +1,11 @@
+// VIBECODED BACKEND PORTFOLIO SCRIPT.JS
+
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.querySelector('.navlinks');
 
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', function () {
+  
     const isOpen = navLinks.classList.toggle('open');
     hamburger.classList.toggle('active', isOpen);
     hamburger.setAttribute('aria-expanded', isOpen);
@@ -17,12 +20,30 @@ if (hamburger && navLinks) {
     });
   });
 }
+
 const header = document.querySelector('header');
 
 if (header) {
   window.addEventListener('scroll', function () {
     header.classList.toggle('scrolled', window.scrollY > 10);
   });
+}
+
+const projectsGridEl = document.getElementById('projects-grid');
+
+if (projectsGridEl) {
+  fetch('./projects-data.json')
+    .then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
+    })
+    .then(function (projects) {
+      renderProjectsGrid(projects);
+    })
+    .catch(function (err) {
+      console.error('Could not load projects-data.json:', err);
+      projectsGridEl.innerHTML = '<p class="admin-subtext">Could not load projects right now.</p>';
+    });
 }
 
 function buildProjectCardInner(project) {
@@ -53,46 +74,33 @@ function buildProjectCardInner(project) {
 function buildFolderCardInner(folder) {
   const count = (folder.items || []).length;
   return (
-    '<div class="folder-badge">📁 ' + count + (count === 1 ? ' project inside' : ' projects inside') + '</div>' +
+    '<div class="folder-badge">' + count + (count === 1 ? ' project inside' : ' projects inside') + '</div>' +
     '<h2 class="project-card-title">' + folder.title + '</h2>' +
     '<p class="project-card-body">' + (folder.description || '') + '</p>' +
     '<span class="project-link">View all &rarr;</span>'
   );
 }
 
-function renderProjectsGrid(source, adminMode) {
+let currentProjects = [];
+function renderProjectsGrid(projects) {
+  currentProjects = projects;
+
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
 
   grid.innerHTML = '';
 
-  const sorted = source.slice().sort(function (a, b) { return a.order - b.order; });
-
-  sorted.forEach(function (entry) {
+  projects.forEach(function (entry) {
     const card = document.createElement('div');
     card.className = entry.kind === 'folder' ? 'project-card folder-card' : 'project-card';
     card.dataset.category = entry.category;
     card.dataset.id = entry.id;
-
     card.innerHTML = entry.kind === 'folder' ? buildFolderCardInner(entry) : buildProjectCardInner(entry);
-
-    if (adminMode) {
-      const controls = document.createElement('div');
-      controls.className = 'card-admin-controls';
-      controls.innerHTML =
-        '<button type="button" class="card-admin-btn" data-admin-action="up" title="Move up">&uarr;</button>' +
-        '<button type="button" class="card-admin-btn" data-admin-action="down" title="Move down">&darr;</button>' +
-        '<button type="button" class="card-admin-btn" data-admin-action="edit" title="Edit">&#9998;</button>' +
-        '<button type="button" class="card-admin-btn" data-admin-action="delete" title="Delete">&#128465;</button>';
-      card.appendChild(controls);
-    }
-
     grid.appendChild(card);
   });
 
   reapplyActiveFilter();
 }
-window.renderProjectsGrid = renderProjectsGrid;
 
 function reapplyActiveFilter() {
   const activeButton = document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn[data-filter="all"]');
@@ -105,10 +113,6 @@ function reapplyActiveFilter() {
   });
 }
 
-if (document.getElementById('projects-grid') && typeof PROJECTS !== 'undefined') {
-  renderProjectsGrid(PROJECTS, false);
-}
-
 document.querySelectorAll('.filter-btn').forEach(function (button) {
   button.addEventListener('click', function () {
     document.querySelectorAll('.filter-btn').forEach(function (btn) {
@@ -119,12 +123,57 @@ document.querySelectorAll('.filter-btn').forEach(function (button) {
   });
 });
 
-document.addEventListener('click', function (event) {
-  const adminButton = event.target.closest('[data-admin-action]');
-  if (adminButton) return; // let projects-admin.js handle these
+const folderDialog = document.getElementById('folder-dialog');
 
-  const folderCard = event.target.closest('.folder-card');
-  if (folderCard && typeof window.openFolderDialog === 'function') {
-    window.openFolderDialog(folderCard.dataset.id);
+function openFolderDialog(folderId) {
+  const folder = currentProjects.find(function (p) { return p.id === folderId; });
+  if (!folder || !folderDialog) return;
+
+  document.getElementById('folder-dialog-title').textContent = folder.title;
+  document.getElementById('folder-dialog-desc').textContent = folder.description || '';
+
+  const listEl = document.getElementById('folder-items-list');
+  listEl.innerHTML = '';
+
+  const items = folder.items || [];
+  if (items.length === 0) {
+    listEl.innerHTML = '<p class="dialog-subtext">Nothing in this folder yet.</p>';
   }
+
+  items.forEach(function (item) {
+    const row = document.createElement('div');
+    row.className = 'item-row';
+
+    let mediaPreview = '';
+    if (item.media && item.media.type === 'image' && item.media.src) {
+      mediaPreview = '<img src="' + item.media.src + '" alt="" class="item-row-thumb">';
+    }
+
+    const linkHtml = item.link
+      ? '<a class="project-link" href="' + item.link + '" target="_blank" rel="noopener">View &rarr;</a>'
+      : '';
+
+    row.innerHTML =
+      mediaPreview +
+      '<div class="item-row-info">' +
+        '<div class="item-row-title">' + item.title + '</div>' +
+        '<div class="item-row-meta">' + (item.description || '') + '</div>' +
+      '</div>' +
+      linkHtml;
+
+    listEl.appendChild(row);
+  });
+
+  folderDialog.showModal();
+}
+
+if (folderDialog) {
+  document.getElementById('close-folder-btn').addEventListener('click', function () {
+    folderDialog.close();
+  });
+}
+
+document.addEventListener('click', function (event) {
+  const folderCard = event.target.closest('.folder-card');
+  if (folderCard) openFolderDialog(folderCard.dataset.id);
 });
