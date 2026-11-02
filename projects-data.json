@@ -5,6 +5,7 @@
     "title": "Figma Website Clones",
     "category": "uiux",
     "description": "Websites Designed/Cloned using Figma",
+    "tags": ["UI/UX", "Figma"],
     "items": [
       {
         "id": "portfolio",
@@ -27,39 +28,29 @@
     "kind": "project",
     "title": "Portfolio Website",
     "category": "webdev",
-    "description": "Public Repository to my portfolio website built using HTML, CSS and JS. ",
+    "description": "Public Repository to my portfolio website built using HTML, CSS and JS. <br><br>",
     "tags": ["Web Dev", "HTML/CSS/JS"],
     "media": { "type": "none" },
     "link": "https://github.com/Coolgoel1/Portfolio"
   },
   {
-    "id": "proj-3",
+    "id": "minibank",
     "kind": "project",
-    "title": "[Python Project Title]",
+    "title": "Mini Bank Application",
     "category": "python",
-    "description": "Add a short description of what this project does and the problem it solves.",
+    "description": "A simulated banking application, where users can create accounts, deposit, withdraw, and check balances. Built using Python. Works in local environment.",
     "tags": ["Python"],
     "media": { "type": "none" },
-    "link": ""
+    "link": "https://github.com/Coolgoel1/Mini-Bank-Application"
   },
   {
-    "id": "proj-4",
+    "id": "healthbuddy",
     "kind": "project",
-    "title": "[Java Project Title]",
-    "category": "java",
-    "description": "Add a short description of what this project does and the problem it solves.",
-    "tags": ["Java"],
+    "title": "Health Buddy",
+    "category": "python",
+    "description": "A Gen-AI Powered Healthcare bot which answers health related queries. Built using python and Gemini API. Works in local environment.",
+    "tags": ["Python", "Gen AI"],
     "media": { "type": "none" },
-    "link": ""
-  },
-  {
-    "id": "proj-5",
-    "kind": "project",
-    "title": "[Prompt Engineering Project Title]",
-    "category": "prompt",
-    "description": "Add a short description of the prompt or AI workflow you built and what it does.",
-    "tags": ["Prompt Engineering", "Gen AI"],
-    "media": { "type": "none" },
-    "link": ""
+    "link": "https://github.com/Coolgoel1/HealthBuddy-AI"
   }
 ]
