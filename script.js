@@ -1,17 +1,14 @@
-// VIBECODED BACKEND PORTFOLIO SCRIPT.JS
-
-let hamburger = document.getElementById('hamburger');
-let navLinks = document.querySelector('.navlinks');
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.navlinks');
 
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', function () {
-  
-    let isOpen = navLinks.classList.toggle('open');
+    const isOpen = navLinks.classList.toggle('open');
     hamburger.classList.toggle('active', isOpen);
     hamburger.setAttribute('aria-expanded', isOpen);
   });
 
-  let links = navLinks.querySelectorAll('a');
+  const links = navLinks.querySelectorAll('a');
   links.forEach(function (link) {
     link.addEventListener('click', function () {
       navLinks.classList.remove('open');
@@ -21,7 +18,7 @@ if (hamburger && navLinks) {
   });
 }
 
-let header = document.querySelector('header');
+const header = document.querySelector('header');
 
 if (header) {
   window.addEventListener('scroll', function () {
@@ -29,7 +26,7 @@ if (header) {
   });
 }
 
-let projectsGridEl = document.getElementById('projects-grid');
+const projectsGridEl = document.getElementById('projects-grid');
 
 if (projectsGridEl) {
   fetch('./projects-data.json')
@@ -54,11 +51,11 @@ function buildProjectCardInner(project) {
     mediaHtml = '<iframe class="project-media project-embed" src="' + project.media.src + '" loading="lazy"></iframe>';
   }
 
-  let tagsHtml = (project.tags || [])
+  const tagsHtml = (project.tags || [])
     .map(function (tag) { return '<span class="project-tag">' + tag + '</span>'; })
     .join('');
 
-  let linkHtml = project.link
+  const linkHtml = project.link
     ? '<br><a class="project-link" href="' + project.link + '" target="_blank" rel="noopener">View project &rarr;</a>'
     : '';
 
@@ -72,26 +69,33 @@ function buildProjectCardInner(project) {
 }
 
 function buildFolderCardInner(folder) {
-  let count = (folder.items || []).length;
+  const count = (folder.items || []).length;
+
+  const tagsHtml = (folder.tags || [])
+    .map(function (tag) { return '<span class="project-tag">' + tag + '</span>'; })
+    .join('');
+
   return (
-    '<div class="folder-badge">' + count + (count === 1 ? ' project inside' : ' projects inside') + '</div>' +
+    '<div class="folder-badge">📁 ' + count + (count === 1 ? ' project inside' : ' projects inside') + '</div>' +
     '<h2 class="project-card-title">' + folder.title + '</h2>' +
     '<p class="project-card-body">' + (folder.description || '') + '</p>' +
+    tagsHtml +
     '<span class="project-link">View all &rarr;</span>'
   );
 }
 
 let currentProjects = [];
+
 function renderProjectsGrid(projects) {
   currentProjects = projects;
 
-  let grid = document.getElementById('projects-grid');
+  const grid = document.getElementById('projects-grid');
   if (!grid) return;
 
   grid.innerHTML = '';
 
   projects.forEach(function (entry) {
-    let card = document.createElement('div');
+    const card = document.createElement('div');
     card.className = entry.kind === 'folder' ? 'project-card folder-card' : 'project-card';
     card.dataset.category = entry.category;
     card.dataset.id = entry.id;
@@ -103,12 +107,12 @@ function renderProjectsGrid(projects) {
 }
 
 function reapplyActiveFilter() {
-  let activeButton = document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn[data-filter="all"]');
+  const activeButton = document.querySelector('.filter-btn.active') || document.querySelector('.filter-btn[data-filter="all"]');
   if (!activeButton) return;
 
-  let chosenCategory = activeButton.dataset.filter;
+  const chosenCategory = activeButton.dataset.filter;
   document.querySelectorAll('.project-card').forEach(function (card) {
-    let cardMatches = chosenCategory === 'all' || card.dataset.category === chosenCategory;
+    const cardMatches = chosenCategory === 'all' || card.dataset.category === chosenCategory;
     card.style.display = cardMatches ? '' : 'none';
   });
 }
@@ -123,25 +127,25 @@ document.querySelectorAll('.filter-btn').forEach(function (button) {
   });
 });
 
-let folderDialog = document.getElementById('folder-dialog');
+const folderDialog = document.getElementById('folder-dialog');
 
 function openFolderDialog(folderId) {
-  let folder = currentProjects.find(function (p) { return p.id === folderId; });
+  const folder = currentProjects.find(function (p) { return p.id === folderId; });
   if (!folder || !folderDialog) return;
 
   document.getElementById('folder-dialog-title').textContent = folder.title;
   document.getElementById('folder-dialog-desc').textContent = folder.description || '';
 
-  let listEl = document.getElementById('folder-items-list');
+  const listEl = document.getElementById('folder-items-list');
   listEl.innerHTML = '';
 
-  let items = folder.items || [];
+  const items = folder.items || [];
   if (items.length === 0) {
     listEl.innerHTML = '<p class="dialog-subtext">Nothing in this folder yet.</p>';
   }
 
   items.forEach(function (item) {
-    let row = document.createElement('div');
+    const row = document.createElement('div');
     row.className = 'item-row';
 
     let mediaPreview = '';
@@ -149,7 +153,7 @@ function openFolderDialog(folderId) {
       mediaPreview = '<img src="' + item.media.src + '" alt="" class="item-row-thumb">';
     }
 
-    let linkHtml = item.link
+    const linkHtml = item.link
       ? '<a class="project-link" href="' + item.link + '" target="_blank" rel="noopener">View &rarr;</a>'
       : '';
 
@@ -174,6 +178,41 @@ if (folderDialog) {
 }
 
 document.addEventListener('click', function (event) {
-  let folderCard = event.target.closest('.folder-card');
+  const folderCard = event.target.closest('.folder-card');
   if (folderCard) openFolderDialog(folderCard.dataset.id);
 });
+
+const contactForm = document.getElementById('contact-form');
+
+const CONTACT_EMAIL = 'advitgoel2811@gmail.com';
+
+if (contactForm) {
+  contactForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
+
+    const subject = 'Portfolio contact from ' + name;
+    const body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+
+    const isMobileDevice = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+    if (isMobileDevice) {
+      const mailtoLink =
+        'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+      window.location.href = mailtoLink;
+    } else {
+      const gmailComposeLink =
+        'https://mail.google.com/mail/?view=cm&fs=1' +
+        '&to=' + encodeURIComponent(CONTACT_EMAIL) +
+        '&su=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+      window.open(gmailComposeLink, '_blank', 'noopener');
+    }
+    contactForm.reset();
+  });
+}
